@@ -2,14 +2,21 @@ var express = require('express');
 var router = express.Router();
 
 var Datastore = require('nedb')
-  , db = new Datastore({ filename: './data/users.db', autoload: true });
+  , db = new Datastore({ filename: './data/users2.db', autoload: true });
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  db.find({} , f)
+  //db.find({} , f)
 
-  res.render('index', { title: 'ALZ Todo App' });
+  res.render('index', { title: 'Home ALZ Todo App' });
+});
+
+/* vvk Home page---GET home page. */
+router.get('/Home', function(req, res, next) {
+  //db.find({} , f)
+
+  res.render('login', { title: 'New ALZ Todo App' });
 });
 
 
@@ -17,6 +24,7 @@ router.get('/', function(req, res, next) {
 router.get('/login', function(req, res, next) {
   res.render('login', { title: 'ALZ Todo App - Login' });
 });
+
 
 router.post('/login', function(req, res, next) {
   var user = req.body;
@@ -32,6 +40,26 @@ router.post('/login', function(req, res, next) {
     // docs is an array containing documents Mars, Earth, Jupiter
     // If no document is found, docs is equal to []
   });
+});
+
+
+/* GET vvktoDo page. */
+router.get('/vvktodo', function(req, res, next) {
+  
+  res.render('vvktodo', { title: 'vvk To Do Page' });
+});
+
+
+/* POST vvktoDo page. */
+router.post('/vvktodo', function(req, res, next) {
+  var doc  = req.body;
+  delete doc.conpass
+  db.insert(doc, function (err, newDoc) {   // Callback is optional
+    // newDoc is the newly inserted document, including its _id
+    // newDoc has no key called notToBeSaved since its value was undefined
+  });
+
+  res.render('vvktodo', { title: 'vvk To Do Page' });
 });
 
 
